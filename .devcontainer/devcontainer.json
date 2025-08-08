@@ -1,47 +1,26 @@
 {
-  "name": "AniDesk Development Environment",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
-  
+  "name": "AniDesk Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "nodeGypDependencies": true,
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers-contrib/features/pnpm:latest": {},
+    "ghcr.io/thatvegandev/devcontainers/features/bun:1": {}
   },
-  
+  "postCreateCommand": "pnpm install --global bun && pnpm install && cd apps/api-proxy && bun install && cd ../desktop && pnpm install && pnpm run build && pnpm run test",
   "customizations": {
     "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      },
       "extensions": [
         "ms-vscode.vscode-typescript-next",
         "ms-vscode-remote.remote-containers",
         "eg2.vscode-npm-script"
-      ]
+      ],
+      "settings": {
+        "files.autoSave": "onWindowChange"
+      }
     }
   },
-  
-  "forwardPorts": [
-    3030,
-    5173
-  ],
-  
-  "portsAttributes": {
-    "3030": {
-      "label": "HiAnime API Server",
-      "onAutoForward": "notify"
-    },
-    "5173": {
-      "label": "Vite Dev Server",
-      "onAutoForward": "openPreview"
-    }
-  },
-  
-  "postCreateCommand": "bash .devcontainer/setup.sh",
-  
-  "postAttachCommand": "code README.md && code src/App.tsx",
-  
-  "remoteUser": "node"
+  "forwardPorts": [3030, 5173],
+  "openFiles": [
+    "README.md",
+    "apps/desktop/src/App.tsx"
+  ]
 }
