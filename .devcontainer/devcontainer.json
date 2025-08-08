@@ -1,0 +1,47 @@
+{
+  "name": "AniDesk Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode-remote.remote-containers",
+        "eg2.vscode-npm-script"
+      ]
+    }
+  },
+  
+  "forwardPorts": [
+    3030,
+    5173
+  ],
+  
+  "portsAttributes": {
+    "3030": {
+      "label": "HiAnime API Server",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openPreview"
+    }
+  },
+  
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  
+  "postAttachCommand": "code README.md && code src/App.tsx",
+  
+  "remoteUser": "node"
+}
